@@ -1,0 +1,10 @@
+classes/
+Standard2/
+*.idpw
+*.idpd
+*.ca
+*.lst
+*.obj
+*.map
+*.class
+*.tmp
