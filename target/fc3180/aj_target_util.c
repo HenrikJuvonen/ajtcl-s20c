@@ -18,94 +18,106 @@
  ******************************************************************************/
 #define AJ_MODULE TARGET_UTIL
 
-#include "aj_target.h"
-#include "aj_util.h"
-#include <aj_debug.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <aj_debug.h>
+#include "aj_target.h"
+#include "aj_util.h"
 
 uint8_t dbgTARGET_UTIL = 0;
 
-void AJ_Sleep(uint32_t time) {
-  struct timespec waittime;
-  waittime.tv_sec = time / 1000;
-  waittime.tv_nsec = (time % 1000) * 1000000LL;
+void AJ_Sleep(uint32_t time)
+{
+    struct timespec waittime;
+    waittime.tv_sec = time / 1000;
+    waittime.tv_nsec = (time % 1000) * 1000000LL;
 
-  // nanosleep returns the amount of time slept before being interrupted by a
-  // signal,
-  // so loop until the full sleep is finished
-  while (nanosleep(&waittime, &waittime) == -1) {
-    continue;
-  }
+    // nanosleep returns the amount of time slept before being interrupted by a signal,
+    // so loop until the full sleep is finished
+    while (nanosleep(&waittime, &waittime) == -1) {
+        continue;
+    }
+
 }
 
-uint32_t AJ_GetElapsedTime(AJ_Time *timer, uint8_t cumulative) {
-  uint32_t elapsed;
-  struct timeb now;
-  ftime(&now);
+uint32_t AJ_GetElapsedTime(AJ_Time* timer, uint8_t cumulative)
+{
+    uint32_t elapsed;
+    struct timeb now;
+    ftime(&now);
 
-  elapsed = (1000 * (now.time - timer->seconds)) +
-            (now.millitm - timer->milliseconds);
+    elapsed = (1000 * (now.time - timer->seconds)) + (now.millitm - timer->milliseconds);
 
-  if (!cumulative) {
+    if (!cumulative) {
+        timer->seconds = now.time;
+        timer->milliseconds = now.millitm;	
+    }
+	return elapsed;
+}
+void AJ_InitTimer(AJ_Time* timer)
+{																				 
+    struct timeb now;
+    ftime(&now);
     timer->seconds = now.time;
     timer->milliseconds = now.millitm;
-  }
-  return elapsed;
-}
-void AJ_InitTimer(AJ_Time *timer) {
-  struct timeb now;
-  ftime(&now);
-  timer->seconds = now.time;
-  timer->milliseconds = now.millitm;
 }
 
-int32_t AJ_GetTimeDifference(AJ_Time *timerA, AJ_Time *timerB) {
-  int32_t diff;
+int32_t AJ_GetTimeDifference(AJ_Time* timerA, AJ_Time* timerB)
+{
+    int32_t diff;
 
-  diff = (1000 * (timerA->seconds - timerB->seconds)) +
-         (timerA->milliseconds - timerB->milliseconds);
-  return diff;
+    diff = (1000 * (timerA->seconds - timerB->seconds)) + (timerA->milliseconds - timerB->milliseconds);
+    return diff;
 }
 
-void AJ_TimeAddOffset(AJ_Time *timerA, uint32_t msec) {
-  uint32_t msecNew;
-  if (msec == -1) {
-    timerA->seconds = -1;
-    timerA->milliseconds = -1;
-  } else {
-    msecNew = (timerA->milliseconds + msec);
-    timerA->seconds = timerA->seconds + (msecNew / 1000);
-    timerA->milliseconds = msecNew % 1000;
-  }
-}
-
-int8_t AJ_CompareTime(AJ_Time timerA, AJ_Time timerB) {
-  if (timerA.seconds == timerB.seconds) {
-    if (timerA.milliseconds == timerB.milliseconds) {
-      return 0;
-    } else if (timerA.milliseconds > timerB.milliseconds) {
-      return 1;
+void AJ_TimeAddOffset(AJ_Time* timerA, uint32_t msec)
+{
+    uint32_t msecNew;
+    if (msec == -1) {
+        timerA->seconds = -1;
+        timerA->milliseconds = -1;
     } else {
-      return -1;
+        msecNew = (timerA->milliseconds + msec);
+        timerA->seconds = timerA->seconds + (msecNew / 1000);
+        timerA->milliseconds = msecNew % 1000;
     }
-  } else if (timerA.seconds > timerB.seconds) {
-    return 1;
-  } else {
-    return -1;
-  }
 }
 
-void *AJ_Malloc(size_t sz) { return malloc(sz); }
-void *AJ_Realloc(void *ptr, size_t size) { return realloc(ptr, size); }
 
-void AJ_Free(void *mem) {
-  if (mem) {
-    free(mem);
-  }
+int8_t AJ_CompareTime(AJ_Time timerA, AJ_Time timerB)
+{
+    if (timerA.seconds == timerB.seconds) {
+        if (timerA.milliseconds == timerB.milliseconds) {
+            return 0;
+        } else if (timerA.milliseconds > timerB.milliseconds) {
+            return 1;
+        } else {
+            return -1;
+        }
+    } else if (timerA.seconds > timerB.seconds) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+
+void* AJ_Malloc(size_t sz)
+{
+    return malloc(sz);
+}
+void* AJ_Realloc(void* ptr, size_t size)
+{
+    return realloc(ptr, size);
+}
+
+void AJ_Free(void* mem)
+{
+    if (mem) {
+        free(mem);
+    }
 }
 
 /*
@@ -115,23 +127,22 @@ void AJ_Free(void *mem) {
  *
  * @param[out] str a pointer to a character array that will hold the user input
  * @param[in]  num the size of the character array 'str'
- * @param[in]  fp  the file pointer the sting will be read from. (most likely
- * stdin)
+ * @param[in]  fp  the file pointer the sting will be read from. (most likely stdin)
  *
- * @return returns the same string as 'str' if there has been a read error a
- * null
+ * @return returns the same string as 'str' if there has been a read error a null
  *                 pointer will be returned and 'str' will remain unchanged.
  */
-char *AJ_GetLine(char *str, size_t num, void *fp) {
-  char *p = fgets(str, num, fp);
+char*AJ_GetLine(char*str, size_t num, void*fp)
+{
+    char*p = fgets(str, num, fp);
 
-  if (p != NULL) {
-    size_t last = strlen(str) - 1;
-    if (str[last] == '\n') {
-      str[last] = '\0';
+    if (p != NULL) {
+        size_t last = strlen(str) - 1;
+        if (str[last] == '\n') {
+            str[last] = '\0';
+        }
     }
-  }
-  return p;
+    return p;
 }
 
 static uint8_t ioThreadRunning = FALSE;
@@ -139,47 +150,51 @@ static char cmdline[1024];
 static uint8_t consumed = TRUE;
 static pthread_t threadId;
 
-void *RunFunc(void *threadArg) {
-  while (ioThreadRunning) {
-    if (consumed) {
-      AJ_GetLine(cmdline, sizeof(cmdline), stdin);
-      consumed = FALSE;
+void* RunFunc(void* threadArg)
+{
+    while (ioThreadRunning) {
+        if (consumed) {
+            AJ_GetLine(cmdline, sizeof(cmdline), stdin);
+            consumed = FALSE;
+        }
+        AJ_Sleep(1000);
     }
-    AJ_Sleep(1000);
-  }
-  return 0;
+    return 0;
 }
 
-uint8_t AJ_StartReadFromStdIn() {
-  int ret = 0;
-  if (!ioThreadRunning) {
-    ret = pthread_create(&threadId, NULL, RunFunc, NULL);
-    if (ret != 0) {
-      AJ_ErrPrintf(("Error: fail to spin a thread for reading from stdin\n"));
+uint8_t AJ_StartReadFromStdIn()
+{
+    int ret = 0;
+    if (!ioThreadRunning) {
+        ret = pthread_create(&threadId, NULL, RunFunc, NULL);
+        if (ret != 0) {
+            AJ_ErrPrintf(("Error: fail to spin a thread for reading from stdin\n"));
+        }
+        ioThreadRunning = TRUE;
+        return TRUE;
     }
-    ioThreadRunning = TRUE;
-    return TRUE;
-  }
-  return FALSE;
+    return FALSE;
 }
 
-char *AJ_GetCmdLine(char *buf, size_t num) {
-  if (!consumed) {
-    strncpy(buf, cmdline, num);
-    buf[num - 1] = '\0';
-    consumed = TRUE;
-    return buf;
-  }
-  return NULL;
+char* AJ_GetCmdLine(char* buf, size_t num)
+{
+    if (!consumed) {
+        strncpy(buf, cmdline, num);
+        buf[num - 1] = '\0';
+        consumed = TRUE;
+        return buf;
+    }
+    return NULL;
 }
 
-uint8_t AJ_StopReadFromStdIn() {
-  void *exit_status;
-  if (ioThreadRunning) {
-    ioThreadRunning = FALSE;
-    return TRUE;
-  }
-  return FALSE;
+uint8_t AJ_StopReadFromStdIn()
+{
+    void* exit_status;
+    if (ioThreadRunning) {
+        ioThreadRunning = FALSE;				
+        return TRUE;
+    }
+    return FALSE;
 }
 
 #ifndef NDEBUG
@@ -188,43 +203,51 @@ uint8_t AJ_StopReadFromStdIn() {
  * This is not intended, nor required to be particularly efficient.  If you want
  * efficiency, turn of debugging.
  */
-int _AJ_DbgEnabled(const char *module) {
-  char buffer[128];
-  char *env;
+int _AJ_DbgEnabled(const char* module)
+{
+    char buffer[128];
+    char* env;
 
-  strcpy(buffer, "ER_DEBUG_ALL");
-  env = getenv(buffer);
-  if (env && strcmp(env, "1") == 0) {
-    return TRUE;
-  }
+    strcpy(buffer, "ER_DEBUG_ALL");
+    env = getenv(buffer);
+    if (env && strcmp(env, "1") == 0) {
+        return TRUE;
+    }
 
-  strcpy(buffer, "ER_DEBUG_");
-  strcat(buffer, module);
-  env = getenv(buffer);
-  if (env && strcmp(env, "1") == 0) {
-    return TRUE;
-  }
+    strcpy(buffer, "ER_DEBUG_");
+    strcat(buffer, module);
+    env = getenv(buffer);
+    if (env && strcmp(env, "1") == 0) {
+        return TRUE;
+    }
 
-  return FALSE;
+    return FALSE;
 }
 
 #endif
 
-uint16_t AJ_ByteSwap16(uint16_t x) {
-  return (uint16_t)(((x >> 8) & 0xffu) | ((x & 0xffu) << 8));
+uint16_t AJ_ByteSwap16(uint16_t x)
+{
+    return (uint16_t) (((x >> 8) & 0xffu) | 
+                       ((x & 0xffu) << 8));
 }
 
-uint32_t AJ_ByteSwap32(uint32_t x) {
-  return ((x & 0xff000000u) >> 24) | ((x & 0x00ff0000u) >> 8) |
-         ((x & 0x0000ff00u) << 8) | ((x & 0x000000ffu) << 24);
+uint32_t AJ_ByteSwap32(uint32_t x)
+{
+    return ((x & 0xff000000u) >> 24) |
+           ((x & 0x00ff0000u) >>  8) |
+           ((x & 0x0000ff00u) <<  8) |
+           ((x & 0x000000ffu) << 24);
 }
 
-uint64_t AJ_ByteSwap64(uint64_t x) {
-  return (
-      ((x & 0xff00000000000000ull) >> 56) |
-      ((x & 0x00ff000000000000ull) >> 40) |
-      ((x & 0x0000ff0000000000ull) >> 24) | ((x & 0x000000ff00000000ull) >> 8) |
-      ((x & 0x00000000ff000000ull) << 8) | ((x & 0x0000000000ff0000ull) << 24) |
-      ((x & 0x000000000000ff00ull) << 40) |
-      ((x & 0x00000000000000ffull) << 56));
+uint64_t AJ_ByteSwap64(uint64_t x)
+{
+    return (((x & 0xff00000000000000ull) >> 56) |
+			((x & 0x00ff000000000000ull) >> 40) |
+			((x & 0x0000ff0000000000ull) >> 24) |
+			((x & 0x000000ff00000000ull) >> 8)  |
+			((x & 0x00000000ff000000ull) << 8)  |
+			((x & 0x0000000000ff0000ull) << 24) |
+			((x & 0x000000000000ff00ull) << 40) |
+			((x & 0x00000000000000ffull) << 56));
 }

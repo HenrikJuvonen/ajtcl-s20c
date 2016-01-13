@@ -20,9 +20,9 @@
  ******************************************************************************/
 #ifdef AJ_SERIAL_CONNECTION
 
-#include "aj_serial.h"
-#include "aj_status.h"
 #include "aj_target.h"
+#include "aj_status.h"
+#include "aj_serial.h"
 
 /**
  * This function initializes the receive path
@@ -40,8 +40,7 @@ void AJ_SerialRX_Shutdown(void);
 AJ_Status AJ_SerialRX_Reset(void);
 
 /**
- * Process the buffers read by the Receive callback - called by the
- * StateMachine.
+ * Process the buffers read by the Receive callback - called by the StateMachine.
  */
 void AJ_ProcessRxBufferList();
 

@@ -23,6 +23,7 @@
 
 #include <alljoyn.h>
 
+
 /**
  * Returns the signature of the next arg to be unmarshalled.
  *
@@ -31,7 +32,7 @@
  * @return  Pointer to the signature of the next arg to unmarshal.
  */
 AJ_EXPORT
-const char *AJ_NextArgSig(AJ_Message *msg);
+const char* AJ_NextArgSig(AJ_Message* msg);
 
 /**
  * Check if the type ID is a container type (array, struct, dictionay entry).
@@ -46,8 +47,7 @@ AJ_EXPORT
 int AJ_IsContainerType(char typeId);
 
 /**
- * Check if the type ID is a scalar type (boolean, byte, int16, int32, int64,
- * uint16, uint32, uint64, double).
+ * Check if the type ID is a scalar type (boolean, byte, int16, int32, int64, uint16, uint32, uint64, double).
  *
  * @param typeId  The type or element type if the array flag is set
  *
@@ -83,8 +83,7 @@ AJ_EXPORT
 int AJ_IsBasicType(char typeId);
 
 /**
- * For scalar types, get the size of that type.  For non-scalar types, get the
- * alignment.
+ * For scalar types, get the size of that type.  For non-scalar types, get the alignment.
  *
  * @param typeId  The type or element type if the array flag is set
  *
@@ -96,19 +95,16 @@ size_t AJ_GetTypeSize(char typeId);
 /**
  * Lookup the message identifier and set the msgId on the message.
  *
- * @param msg    The message already initialized with object, interface, and
- * member fields
- * @param secure Returns boolen indicating if the object or interface was marked
- * secure
+ * @param msg    The message already initialized with object, interface, and member fields
+ * @param secure Returns boolen indicating if the object or interface was marked secure
  *
  * @return  - AJ_OK if the message was found
- *          - AJ_ERR_SIGNATURE if the message was found but the signature was
- * missing or incorrect.
+ *          - AJ_ERR_SIGNATURE if the message was found but the signature was missing or incorrect.
  *            The message identified is still set.
  *          - AJ_ERR_NO_MATCH if the message could not be identified
  */
 AJ_EXPORT
-AJ_Status AJ_LookupMessageId(AJ_Message *msg, uint8_t *secure);
+AJ_Status AJ_LookupMessageId(AJ_Message* msg, uint8_t* secure);
 
 /**
  * Lookup a property identifier and get the property signature
@@ -118,19 +114,17 @@ AJ_Status AJ_LookupMessageId(AJ_Message *msg, uint8_t *secure);
  * @param prop    The property name
  * @param propId  Returns the property identifier
  * @param sig     Returns the property type signature
- * @param secure  Returns boolen indicating if the property is on an object or
- * interface marked secure
+ * @param secure  Returns boolen indicating if the property is on an object or interface marked secure
  *
  * @return  - AJ_OK if the message was found
  *          - AJ_ERR_NO_MATCH if the property could not be identified
  */
 AJ_EXPORT
-AJ_Status AJ_IdentifyProperty(AJ_Message *msg, const char *iface,
-                              const char *prop, uint32_t *propId,
-                              const char **sig, uint8_t *secure);
+AJ_Status AJ_IdentifyProperty(AJ_Message* msg, const char* iface, const char* prop, uint32_t* propId, const char** sig, uint8_t* secure);
 
 /**
  * @}
  */
 
 #endif
+

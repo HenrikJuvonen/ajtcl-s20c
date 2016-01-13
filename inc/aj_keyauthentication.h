@@ -2,8 +2,7 @@
 #define _AJ_KEYAUTHENTICATION_H
 /**
  * @file aj_keyauthentication.h
- * @defgroup aj_keyauthentication Implementation of Key Authentication
- * mechanisms
+ * @defgroup aj_keyauthentication Implementation of Key Authentication mechanisms
  * @{
  */
 /******************************************************************************
@@ -22,22 +21,20 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
-#include "aj_crypto_sha2.h"
-#include "aj_peer.h"
 #include "aj_target.h"
+#include "aj_peer.h"
+#include "aj_crypto_sha2.h"
 
-typedef AJ_Status (*AJ_KAInit)(AJ_AuthListenerFunc authlistener,
-                               const uint8_t *mastersecret,
-                               size_t mastersecretlen, AJ_SHA256_Context *hash);
-typedef AJ_Status (*AJ_KAMarshal)(AJ_Message *msg, uint8_t role);
-typedef AJ_Status (*AJ_KAUnmarshal)(AJ_Message *msg, uint8_t role);
-typedef AJ_Status (*AJ_KAFinal)(uint32_t *expiration);
+typedef AJ_Status (*AJ_KAInit)(AJ_AuthListenerFunc authlistener, const uint8_t* mastersecret, size_t mastersecretlen, AJ_SHA256_Context* hash);
+typedef AJ_Status (*AJ_KAMarshal)(AJ_Message* msg, uint8_t role);
+typedef AJ_Status (*AJ_KAUnmarshal)(AJ_Message* msg, uint8_t role);
+typedef AJ_Status (*AJ_KAFinal)(uint32_t* expiration);
 
 typedef struct _AJ_KeyAuthentication {
-  AJ_KAInit Init;
-  AJ_KAMarshal Marshal;
-  AJ_KAUnmarshal Unmarshal;
-  AJ_KAFinal Final;
+    AJ_KAInit Init;
+    AJ_KAMarshal Marshal;
+    AJ_KAUnmarshal Unmarshal;
+    AJ_KAFinal Final;
 } AJ_KeyAuthentication;
 
 #define AUTH_ECDSA
@@ -47,8 +44,8 @@ typedef struct _AJ_KeyAuthentication {
 #define AUTH_CLIENT 0
 #define AUTH_SERVER 1
 
-#define DSA_PRV_KEY_ID 1
-#define DSA_PUB_KEY_ID 2
+#define DSA_PRV_KEY_ID  1
+#define DSA_PUB_KEY_ID  2
 
 #ifdef AUTH_ECDSA
 extern AJ_KeyAuthentication AJ_KeyAuthenticationECDSA;

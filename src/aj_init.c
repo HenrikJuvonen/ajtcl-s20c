@@ -18,19 +18,18 @@
  ******************************************************************************/
 
 /**
- * Per-module definition of the current module for debug logging.  Must be
- * defined
+ * Per-module definition of the current module for debug logging.  Must be defined
  * prior to first inclusion of aj_debug.h
  */
 #define AJ_MODULE INIT
 
 #include "aj_target.h"
-#include "aj_creds.h"
-#include "aj_crypto.h"
-#include "aj_debug.h"
-#include "aj_guid.h"
 #include "aj_init.h"
 #include "aj_nvram.h"
+#include "aj_creds.h"
+#include "aj_guid.h"
+#include "aj_crypto.h"
+#include "aj_debug.h"
 
 /**
  * Turn on per-module debug printing by setting this variable to non-zero value
@@ -42,18 +41,19 @@ uint8_t dbgINIT = 0;
 
 static uint8_t initialized = FALSE;
 
-void AJ_Initialize(void) {
-  AJ_GUID localGuid;
-  if (!initialized) {
-    initialized = TRUE;
-    AJ_NVRAM_Init();
-    /*
-     * This will seed the random number generator
-     */
-    AJ_RandBytes(NULL, 0);
-    /*
-     * This will initialize credentials if needed
-     */
-    AJ_GetLocalGUID(&localGuid);
-  }
+void AJ_Initialize(void)
+{
+    AJ_GUID localGuid;
+    if (!initialized) {
+        initialized = TRUE;
+        AJ_NVRAM_Init();
+        /*
+         * This will seed the random number generator
+         */
+        AJ_RandBytes(NULL, 0);
+        /*
+         * This will initialize credentials if needed
+         */
+        AJ_GetLocalGUID(&localGuid);
+    }
 }

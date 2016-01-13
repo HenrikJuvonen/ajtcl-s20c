@@ -24,14 +24,10 @@
 #include <alljoyn.h>
 
 /**
- * Enable link timeout for the connection between the application and the daemon
- * bus. If there are
- * no link activities during that period, at most 3 probe packets are sent to
- * the daemon bus with
- * an interval of 5 seconds. If none of the probe packets are acknowledged by
- * the daemon bus due
- * to any resons (eg., WIFI is off), AJ_BusLinkStateProc will return
- * AJ_ERR_LINK_TIMEOUT
+ * Enable link timeout for the connection between the application and the daemon bus. If there are
+ * no link activities during that period, at most 3 probe packets are sent to the daemon bus with
+ * an interval of 5 seconds. If none of the probe packets are acknowledged by the daemon bus due
+ * to any resons (eg., WIFI is off), AJ_BusLinkStateProc will return AJ_ERR_LINK_TIMEOUT
  * so that the application has to re-connect to the daemon bus.
  *
  * @param bus        The bus attachment to which the app is connected to
@@ -42,11 +38,10 @@
  *          - AJ_ERR_FAILURE if timeout is 0
  */
 AJ_EXPORT
-AJ_Status AJ_SetBusLinkTimeout(AJ_BusAttachment *bus, uint32_t timeout);
+AJ_Status AJ_SetBusLinkTimeout(AJ_BusAttachment* bus, uint32_t timeout);
 
 /**
- * Call to notify that the bus link is currently active. This is implicitly
- * implied upon receiving packets from the bus.
+ * Call to notify that the bus link is currently active. This is implicitly implied upon receiving packets from the bus.
  */
 AJ_EXPORT
 void AJ_NotifyLinkActive();
@@ -55,12 +50,11 @@ void AJ_NotifyLinkActive();
  * Call to do the work of bus link maintainance.
  *
  * @return  Return AJ_Status
- *          - AJ_ERR_LINK_TIMEOUT if the bus link is considered as dead. The
- * application has to re-connect to the daemon bus.
+ *          - AJ_ERR_LINK_TIMEOUT if the bus link is considered as dead. The application has to re-connect to the daemon bus.
  *          - AJ_OK otherwise
  */
 AJ_EXPORT
-AJ_Status AJ_BusLinkStateProc(AJ_BusAttachment *bus);
+AJ_Status AJ_BusLinkStateProc(AJ_BusAttachment* bus);
 
 /**
  * @}

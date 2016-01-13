@@ -21,24 +21,23 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
-#include "aj_crypto_sha2.h"
-#include "aj_peer.h"
 #include "aj_target.h"
+#include "aj_peer.h"
+#include "aj_crypto_sha2.h"
 
 /*
  * Key Exchange Types
  */
-#define AJ_KE_ECDHE 0x1
+#define AJ_KE_ECDHE   0x1
 
-typedef AJ_Status (*AJ_KEInit)(AJ_SHA256_Context *hash);
-typedef AJ_Status (*AJ_KEMarshal)(AJ_Message *msg);
-typedef AJ_Status (*AJ_KEUnmarshal)(AJ_Message *msg, uint8_t **secret,
-                                    size_t *secretlen);
+typedef AJ_Status (*AJ_KEInit)(AJ_SHA256_Context* hash);
+typedef AJ_Status (*AJ_KEMarshal)(AJ_Message* msg);
+typedef AJ_Status (*AJ_KEUnmarshal)(AJ_Message* msg, uint8_t** secret, size_t* secretlen);
 
 typedef struct _AJ_KeyExchange {
-  AJ_KEInit Init;
-  AJ_KEMarshal Marshal;
-  AJ_KEUnmarshal Unmarshal;
+    AJ_KEInit Init;
+    AJ_KEMarshal Marshal;
+    AJ_KEUnmarshal Unmarshal;
 } AJ_KeyExchange;
 
 /**

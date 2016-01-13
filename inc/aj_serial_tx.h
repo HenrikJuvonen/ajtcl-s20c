@@ -20,9 +20,10 @@
  ******************************************************************************/
 #ifdef AJ_SERIAL_CONNECTION
 
-#include "aj_serial.h"
-#include "aj_status.h"
 #include "aj_target.h"
+#include "aj_status.h"
+#include "aj_serial.h"
+
 
 /**
  * This function initializes the serial transport layer.
@@ -39,29 +40,30 @@ AJ_Status AJ_SerialTX_Reset(void);
  */
 void AJ_SerialTX_Shutdown(void);
 
+
 /**
- * This function adds a control packet that contains H:5 control information
- * (link control or ACK)
- * to the transmit queue. This function assumes that the packet is statically
- * allocated or is NULL.
+ * This function adds a control packet that contains H:5 control information (link control or ACK)
+ * to the transmit queue. This function assumes that the packet is statically allocated or is NULL.
  */
-void AJ_SerialTX_EnqueueCtrl(const uint8_t *packet, uint16_t pktLen,
+void AJ_SerialTX_EnqueueCtrl(const uint8_t* packet,
+                             uint16_t pktLen,
                              uint8_t type);
 
 /**
  * This function adds a packet that contains Bluetooth data, HCI command,
  * ACL data, or SCO data to the transmit queue.
  */
-void AJ_SerialTX_EnqueuePkt(uint8_t type, uint16_t header, uint16_t length);
+void AJ_SerialTX_EnqueuePkt(uint8_t type,
+                            uint16_t header,
+                            uint16_t length);
 
 /**
- * This function is called by the receive layer when a data packet or an
- * explicit ACK
- * has been received. The ACK value is one greater (modulo 8) than the seq
- * number of the
+ * This function is called by the receive layer when a data packet or an explicit ACK
+ * has been received. The ACK value is one greater (modulo 8) than the seq number of the
  * last packet successfully received.
  */
 void AJ_SerialTX_ReceivedAck(uint8_t ack);
+
 
 /**
  * This function is called from the receive side with the sequence number of
@@ -82,8 +84,7 @@ void ResendPackets();
 void SendAck();
 
 /**
- * There is space available in the transmit queue handled by the transmit
- * callback,
+ * There is space available in the transmit queue handled by the transmit callback,
  * queue up packets if there are any.
  */
 void AJ_FillTxBufferList();

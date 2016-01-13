@@ -21,19 +21,19 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
-#include "aj_about.h"
-#include "aj_bus.h"
-#include "aj_connect.h"
-#include "aj_debug.h"
-#include "aj_helper.h"
-#include "aj_init.h"
-#include "aj_introspect.h"
-#include "aj_msg.h"
-#include "aj_status.h"
-#include "aj_std.h"
 #include "aj_target.h"
-#include "aj_util.h"
+#include "aj_debug.h"
 #include "aj_version.h"
+#include "aj_status.h"
+#include "aj_init.h"
+#include "aj_util.h"
+#include "aj_bus.h"
+#include "aj_msg.h"
+#include "aj_introspect.h"
+#include "aj_std.h"
+#include "aj_connect.h"
+#include "aj_about.h"
+#include "aj_helper.h"
 
 /**
  * @}

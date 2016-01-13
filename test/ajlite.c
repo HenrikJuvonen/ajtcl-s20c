@@ -24,31 +24,35 @@
 
 static const char ServiceName[] = "org.alljoyn.ajlite";
 
-#define CONNECT_TIMEOUT (1000 * 60)
-#define UNMARSHAL_TIMEOUT (1000 * 5)
+#define CONNECT_TIMEOUT    (1000 * 60)
+#define UNMARSHAL_TIMEOUT  (1000 * 5)
 
-int AJ_Main_ajlite() {
-  AJ_Status status;
-  AJ_BusAttachment bus;
+int AJ_Main_ajlite()
+{
+    AJ_Status status;
+    AJ_BusAttachment bus;
 
-  AJ_Initialize();
+    AJ_Initialize();
 
-  status = AJ_FindBusAndConnect(&bus, NULL, CONNECT_TIMEOUT);
-  if (status == AJ_OK) {
-    status = AJ_BusRequestName(&bus, ServiceName, AJ_NAME_REQ_DO_NOT_QUEUE);
-  }
-  while (status == AJ_OK) {
-    AJ_Message msg;
-    status = AJ_UnmarshalMsg(&bus, &msg, UNMARSHAL_TIMEOUT);
+    status = AJ_FindBusAndConnect(&bus, NULL, CONNECT_TIMEOUT);
     if (status == AJ_OK) {
-      status = AJ_BusHandleBusMessage(&msg);
+        status = AJ_BusRequestName(&bus, ServiceName, AJ_NAME_REQ_DO_NOT_QUEUE);
     }
-    AJ_CloseMsg(&msg);
-  }
+    while (status == AJ_OK) {
+        AJ_Message msg;
+        status = AJ_UnmarshalMsg(&bus, &msg, UNMARSHAL_TIMEOUT);
+        if (status == AJ_OK) {
+            status = AJ_BusHandleBusMessage(&msg);
+        }
+        AJ_CloseMsg(&msg);
+    }
 
-  return 0;
+    return 0;
 }
 
 #ifdef AJ_MAIN
-int ajlite() { return AJ_Main_ajlite(); }
+int ajlite()
+{
+    return AJ_Main_ajlite();
+}
 #endif

@@ -21,15 +21,15 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
-#include "aj_status.h"
 #include "aj_target.h"
+#include "aj_status.h"
 
 /**
  * Structure for holding a time
  */
 typedef struct _AJ_Time {
-  uint16_t milliseconds; /**< The number of milliseconds in the time */
-  uint32_t seconds;      /**< The number of seconds in the time */
+    uint16_t milliseconds;      /**< The number of milliseconds in the time */
+    uint32_t seconds;           /**< The number of seconds in the time */
 } AJ_Time;
 
 /**
@@ -40,22 +40,20 @@ typedef struct _AJ_Time {
  * @return  A string containing the alljoyn version
  */
 AJ_EXPORT
-const char *AJ_GetVersion();
+const char* AJ_GetVersion();
 
 /**
- * Get the time elapsed in milliseconds since this function was called with the
- * same timer.
+ * Get the time elapsed in milliseconds since this function was called with the same timer.
  * Call AJ_InitTimer() to initialize the timer before calling this function.
  *
  * @param timer      Tracks relative time.
- * @param cumulative If TRUE the elapsed time returned is cumulative, otherwise
- * it is relative to
+ * @param cumulative If TRUE the elapsed time returned is cumulative, otherwise it is relative to
  *                   the time the function was last called.
  *
  * @return  The elapsed time in milliseconds.
  */
 AJ_EXPORT
-uint32_t AJ_GetElapsedTime(AJ_Time *timer, uint8_t cumulative);
+uint32_t AJ_GetElapsedTime(AJ_Time* timer, uint8_t cumulative);
 
 /**
  * Initialize a timer
@@ -63,13 +61,13 @@ uint32_t AJ_GetElapsedTime(AJ_Time *timer, uint8_t cumulative);
  * @param timer  The timer to initialize
  */
 AJ_EXPORT
-void AJ_InitTimer(AJ_Time *timer);
+void AJ_InitTimer(AJ_Time* timer);
 
 AJ_EXPORT
-int32_t AJ_GetTimeDifference(AJ_Time *timerA, AJ_Time *timerB);
+int32_t AJ_GetTimeDifference(AJ_Time* timerA, AJ_Time* timerB);
 
 AJ_EXPORT
-void AJ_TimeAddOffset(AJ_Time *timerA, uint32_t msec);
+void AJ_TimeAddOffset(AJ_Time* timerA, uint32_t msec);
 
 AJ_EXPORT
 int8_t AJ_CompareTime(AJ_Time timerA, AJ_Time timerB);
@@ -77,7 +75,8 @@ int8_t AJ_CompareTime(AJ_Time timerA, AJ_Time timerB);
 /**
  * Indicates a future time so a periodic event won't happen
  */
-#define AJ_TIMER_FOREVER -1
+#define AJ_TIMER_FOREVER  -1
+
 
 /**
  * Suspend to low-power mode on embedded devices
@@ -88,6 +87,7 @@ int8_t AJ_CompareTime(AJ_Time timerA, AJ_Time timerB);
  */
 AJ_Status AJ_SuspendWifi(uint32_t msec);
 
+
 /**
  * Pause the current thread for a number of milliseconds
  */
@@ -95,46 +95,43 @@ AJ_EXPORT
 void AJ_Sleep(uint32_t time);
 
 /**
- * Allocate memory. This function should only be used for allocation of short
- * term buffers that
+ * Allocate memory. This function should only be used for allocation of short term buffers that
  * might otherwise be allocated on the stack.
  */
 AJ_EXPORT
-void *AJ_Malloc(size_t size);
+void* AJ_Malloc(size_t size);
 
 /**
  * Reallocate a previously allocated memory block to a new size
  */
 AJ_EXPORT
-void *AJ_Realloc(void *ptr, size_t size);
+void* AJ_Realloc(void* ptr, size_t size);
 /**
  * Free memory previously allocated by AJ_Malloc()
  */
 AJ_EXPORT
-void AJ_Free(void *mem);
+void AJ_Free(void* mem);
+
 
 /**
  * Macro for getting the size of an array variable
  */
-#define ArraySize(a) (sizeof(a) / sizeof(a[0]))
+#define ArraySize(a)  (sizeof(a) / sizeof(a[0]))
 
 /**
- * Find position of first instance of any character in a given string in a
- * string.
+ * Find position of first instance of any character in a given string in a string.
  *
  * @param str   The string to search
  * @param chars The characters to search for
  *
- * @return  The position of the first instance of the character in the string or
- * -1 if the character
+ * @return  The position of the first instance of the character in the string or -1 if the character
  *          does not appear in the string.
  *
  */
-int32_t AJ_StringFindFirstOf(const char *str, char *chars);
+int32_t AJ_StringFindFirstOf(const char* str, char* chars);
 
 /**
- * Convert a raw byte string to NUL terminated ascii hex string. It is permitted
- * for raw and hex to
+ * Convert a raw byte string to NUL terminated ascii hex string. It is permitted for raw and hex to
  * point to the same memory location.
  *
  * @param raw     The bytes to convert
@@ -145,31 +142,25 @@ int32_t AJ_StringFindFirstOf(const char *str, char *chars);
  *
  * @return
  *          - AJ_OK if the string was converted
- *          - AJ_ERR_RESOURCES if the hexLen is too small to fit the converted
- * string.
+ *          - AJ_ERR_RESOURCES if the hexLen is too small to fit the converted string.
  */
-AJ_Status AJ_RawToHex(const uint8_t *raw, size_t rawLen, char *hex,
-                      size_t hexLen, uint8_t lower);
+AJ_Status AJ_RawToHex(const uint8_t* raw, size_t rawLen, char* hex, size_t hexLen, uint8_t lower);
 
 /**
- * Convert a NUL terminated ascii hex string to raw bytes. It is permitted for
- * raw and hex buffer to
+ * Convert a NUL terminated ascii hex string to raw bytes. It is permitted for raw and hex buffer to
  * point to the same memory location.
  *
  * @param hex     The buffer containing the ASCII hex string
- * @param hexLen  Length of the hex data to decode or zero to decode entire
- * string.
+ * @param hexLen  Length of the hex data to decode or zero to decode entire string.
  * @param raw     The bytes to convert
  * @param rawLen  The number of bytes to convert
  *
  * @return
  *          - AJ_OK if the string was converted.
- *          - AJ_ERR_RESOURCES if the rawLen is too small to fit the converted
- * string.
+ *          - AJ_ERR_RESOURCES if the rawLen is too small to fit the converted string.
  *          - AJ_ERR_UNEXPECTED if the string is not a hexidecimal string.
  */
-AJ_Status AJ_HexToRaw(const char *hex, size_t hexLen, uint8_t *raw,
-                      size_t rawLen);
+AJ_Status AJ_HexToRaw(const char* hex, size_t hexLen, uint8_t* raw, size_t rawLen);
 
 /**
  * get a line of input from the the file pointer (most likely stdin).
@@ -178,14 +169,12 @@ AJ_Status AJ_HexToRaw(const char *hex, size_t hexLen, uint8_t *raw,
  *
  * @param[out] str a pointer to a character array that will hold the user input
  * @param[in]  num the size of the character array 'str'
- * @param[in]  fp  the file pointer the sting will be read from. (most likely
- * stdin)
+ * @param[in]  fp  the file pointer the sting will be read from. (most likely stdin)
  *
- * @return returns the same string as 'str' if there has been a read error a
- * null
+ * @return returns the same string as 'str' if there has been a read error a null
  *                 pointer will be returned and 'str' will remain unchanged.
  */
-char *AJ_GetLine(char *str, size_t num, void *fp);
+char* AJ_GetLine(char* str, size_t num, void* fp);
 
 /**
  * Prepare to read input from stdin
@@ -205,11 +194,10 @@ uint8_t AJ_StopReadFromStdIn();
  * @param[out] buf a character array that will hold the user input
  * @param[in]  num the size of the character array 'str'
  *
- * @return returns the same string as 'buf' if there has been a read error a
- * null
+ * @return returns the same string as 'buf' if there has been a read error a null
  *                 pointer will be returned and 'buf' will remain unchanged.
  */
-char *AJ_GetCmdLine(char *buf, size_t num);
+char* AJ_GetCmdLine(char* buf, size_t num);
 
 /**
  * Encodes raw bytes to base 64
@@ -221,8 +209,7 @@ char *AJ_GetCmdLine(char *buf, size_t num);
  *
  * @return AJ_OK on success, AJ_ERR_RESOURCES if input buffer too short
  */
-AJ_Status AJ_RawToB64(const uint8_t *raw, size_t rawlen, char *pem,
-                      size_t pemlen);
+AJ_Status AJ_RawToB64(const uint8_t* raw, size_t rawlen, char* pem, size_t pemlen);
 
 /**
  * Decodes base64 to raw bytes
@@ -234,8 +221,7 @@ AJ_Status AJ_RawToB64(const uint8_t *raw, size_t rawlen, char *pem,
  *
  * @return AJ_OK on success, AJ_ERR_RESOURCES if input buffer too short
  */
-AJ_Status AJ_B64ToRaw(const char *pem, size_t pemlen, uint8_t *raw,
-                      size_t rawlen);
+AJ_Status AJ_B64ToRaw(const char* pem, size_t pemlen, uint8_t* raw, size_t rawlen);
 
 uint16_t AJ_ByteSwap16(uint16_t x);
 uint32_t AJ_ByteSwap32(uint32_t x);

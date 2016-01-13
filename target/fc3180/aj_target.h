@@ -19,16 +19,16 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
-#include "aj_status.h"
-#include "stdint.h"
-#include <assert.h>
+#include <stdio.h>	 
 #include <stddef.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
 #include <unistd.h>
+#include <string.h>
+#include <assert.h>
+#include <time.h>
+#include "stdint.h"
+#include "aj_status.h"
 
-#define va_copy(x, y) (x) = (y)
+#define va_copy(x, y) (x)=(y)
 
 #define TRUE 1
 #define FALSE 0
@@ -37,24 +37,24 @@
 #define min(x, y) ((x) < (y) ? (x) : (y))
 
 #define WORD_ALIGN(x) ((x & 0x3) ? ((x >> 2) + 1) << 2 : x)
-
-#define HOST_IS_LITTLE_ENDIAN FALSE
-#define HOST_IS_BIG_ENDIAN TRUE
-#define HOST_ENDIANESS AJ_BIG_ENDIAN
+					
+#define HOST_IS_LITTLE_ENDIAN  FALSE
+#define HOST_IS_BIG_ENDIAN     TRUE
+#define HOST_ENDIANESS         AJ_BIG_ENDIAN
 
 #include "esputil.h"
-#define AJ_Printf(...) console_write(##__VA_ARGS__)
-
-int select(int s, uint32_t timeout);
+#define AJ_Printf(...) \
+    console_write(## __VA_ARGS__)
+														
+int select(int s, uint32_t timeout);					
 int selectfrom(int s, uint32_t timeout);
 
-AJ_Status AJ_CreateTask(void (*task)(int, char **), char *name, int argc,
-                        char **argv);
+AJ_Status AJ_CreateTask(void (*task)(int, char**), char* name, int argc, char** argv);
 AJ_Status AJ_InitSystem();
 AJ_Status AJ_InitOS();
 AJ_Status AJ_StartOS();
 void AJ_Main();
-
+					
 #define AJ_ASSERT(x) assert(x)
 
 /*

@@ -31,8 +31,8 @@
 #define SENTINEL_OFFSET (4)
 
 typedef struct _NV_EntryHeader {
-  uint16_t id;       /**< The unique id */
-  uint16_t capacity; /**< The data set size */
+    uint16_t id;           /**< The unique id */
+    uint16_t capacity;     /**< The data set size */
 } NV_EntryHeader;
 
 #define ENTRY_HEADER_SIZE (sizeof(NV_EntryHeader))
@@ -45,7 +45,7 @@ typedef struct _NV_EntryHeader {
  * @param buf   Pointer to data to be written
  * @param size  The number of bytes to be written
  */
-void _AJ_NV_Write(void *dest, void *buf, uint16_t size);
+void _AJ_NV_Write(void* dest, void* buf, uint16_t size);
 
 /**
  * Read a block of data from NVRAM
@@ -54,7 +54,7 @@ void _AJ_NV_Write(void *dest, void *buf, uint16_t size);
  * @param buf   Pointer to data to be written
  * @param size  The number of bytes to be written
  */
-void _AJ_NV_Read(void *src, void *buf, uint16_t size);
+void _AJ_NV_Read(void* src, void* buf, uint16_t size);
 
 /**
  * Erase the whole NVRAM sector and write the sentinel data

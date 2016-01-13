@@ -21,29 +21,28 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
+#include "aj_target.h"
 #include "aj_net.h"
 #include "aj_status.h"
-#include "aj_target.h"
 #include "aj_util.h"
 
 /*
  * Command for auth listener callback
  */
-#define AJ_CRED_PRV_KEY 0x0001    /**< Request for a private key */
-#define AJ_CRED_PUB_KEY 0x0002    /**< Request for a public key */
+#define AJ_CRED_PRV_KEY    0x0001 /**< Request for a private key */
+#define AJ_CRED_PUB_KEY    0x0002 /**< Request for a public key */
 #define AJ_CRED_CERT_CHAIN 0x0003 /**< Request for a certificate chain */
-#define AJ_CRED_CERT_TRUST                                                     \
-  0x0004 /**< Query if a certificate issuer is trusted */
-#define AJ_CRED_CERT_ROOT 0x0005 /**< Notification of a root certificate */
+#define AJ_CRED_CERT_TRUST 0x0004 /**< Query if a certificate issuer is trusted */
+#define AJ_CRED_CERT_ROOT  0x0005 /**< Notification of a root certificate */
 
 /*
  * Type for a Credential entry for the auth listener callback
  */
 typedef struct _AJ_Credential {
-  uint32_t mask;       /**< command (see above list) */
-  uint32_t expiration; /**< auth listener to set key expiration value */
-  uint8_t *data;       /**< data to or from the auth listener */
-  size_t len;          /**< length of data */
+    uint32_t mask;       /**< command (see above list) */
+    uint32_t expiration; /**< auth listener to set key expiration value */
+    uint8_t* data;       /**< data to or from the auth listener */
+    size_t len;          /**< length of data */
 } AJ_Credential;
 
 #endif

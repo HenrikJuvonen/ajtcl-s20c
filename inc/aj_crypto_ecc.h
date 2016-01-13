@@ -21,10 +21,11 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
-#include "aj_status.h"
 #include "aj_target.h"
+#include "aj_status.h"
 
-typedef enum { B_FALSE, B_TRUE } boolean_t;
+typedef enum {B_FALSE, B_TRUE} boolean_t;
+
 
 #define BIGLEN 9
 /*
@@ -36,17 +37,20 @@ typedef enum { B_FALSE, B_TRUE } boolean_t;
  * within each word.
  */
 
-typedef struct { uint32_t data[BIGLEN]; } bigval_t;
+typedef struct {
+    uint32_t data[BIGLEN];
+} bigval_t;
+
 
 typedef struct {
-  bigval_t x;
-  bigval_t y;
-  uint32_t infinity;
+    bigval_t x;
+    bigval_t y;
+    uint32_t infinity;
 } affine_point_t;
 
 typedef struct {
-  bigval_t r;
-  bigval_t s;
+    bigval_t r;
+    bigval_t s;
 } ECDSA_sig_t;
 
 typedef bigval_t ecc_privatekey;
@@ -63,8 +67,7 @@ typedef ECDSA_sig_t ecc_signature;
  * @return  - AJ_OK if the key pair is successfully generated.
  *          - AJ_ERR_SECURITY otherwise
  */
-AJ_Status AJ_GenerateDHKeyPair(ecc_publickey *publicKey,
-                               ecc_privatekey *privateKey);
+AJ_Status AJ_GenerateDHKeyPair(ecc_publickey* publicKey, ecc_privatekey* privateKey);
 
 /**
  * Generates the Diffie-Hellman share secret.
@@ -76,9 +79,7 @@ AJ_Status AJ_GenerateDHKeyPair(ecc_publickey *publicKey,
  * @return  - AJ_OK if the share secret is successfully generated.
  *          - AJ_ERR_SECURITY otherwise
  */
-AJ_Status AJ_GenerateShareSecret(ecc_publickey *peerPublicKey,
-                                 ecc_privatekey *privateKey,
-                                 ecc_secret *secret);
+AJ_Status AJ_GenerateShareSecret(ecc_publickey* peerPublicKey, ecc_privatekey* privateKey, ecc_secret* secret);
 
 /**
  * Generates the DSA key pair.
@@ -88,8 +89,7 @@ AJ_Status AJ_GenerateShareSecret(ecc_publickey *peerPublicKey,
  * @return  - AJ_OK if the key pair is successfully generated
  *          - AJ_ERR_SECURITY otherwise
  */
-AJ_Status AJ_GenerateDSAKeyPair(ecc_publickey *publicKey,
-                                ecc_privatekey *privateKey);
+AJ_Status AJ_GenerateDSAKeyPair(ecc_publickey* publicKey, ecc_privatekey* privateKey);
 
 /**
  * Sign a digest using the DSA key
@@ -99,9 +99,7 @@ AJ_Status AJ_GenerateDSAKeyPair(ecc_publickey *publicKey,
  * @return  - AJ_OK if the signing process succeeds
  *          - AJ_ERR_SECURITY otherwise
  */
-AJ_Status AJ_DSASignDigest(const uint8_t *digest,
-                           const ecc_privatekey *signingPrivateKey,
-                           ecc_signature *sig);
+AJ_Status AJ_DSASignDigest(const uint8_t* digest, const ecc_privatekey* signingPrivateKey, ecc_signature* sig);
 
 /**
  * Sign a buffer using the DSA key
@@ -112,9 +110,7 @@ AJ_Status AJ_DSASignDigest(const uint8_t *digest,
  * @return  - AJ_OK if the signing process succeeds
  *          - AJ_ERR_SECURITY otherwise
  */
-AJ_Status AJ_DSASign(const uint8_t *buf, uint16_t len,
-                     const ecc_privatekey *signingPrivateKey,
-                     ecc_signature *sig);
+AJ_Status AJ_DSASign(const uint8_t* buf, uint16_t len, const ecc_privatekey* signingPrivateKey, ecc_signature* sig);
 
 /**
  * Verify DSA signature of a digest
@@ -124,8 +120,7 @@ AJ_Status AJ_DSASign(const uint8_t *buf, uint16_t len,
  * @return  - AJ_OK if the signature verification succeeds
  *          - AJ_ERR_SECURITY otherwise
  */
-AJ_Status AJ_DSAVerifyDigest(const uint8_t *digest, const ecc_signature *sig,
-                             const ecc_publickey *pubKey);
+AJ_Status AJ_DSAVerifyDigest(const uint8_t* digest, const ecc_signature* sig, const ecc_publickey* pubKey);
 
 /**
  * Verify DSA signature of a buffer
@@ -136,7 +131,6 @@ AJ_Status AJ_DSAVerifyDigest(const uint8_t *digest, const ecc_signature *sig,
  * @return  - AJ_OK if the signature verification succeeds
  *          - AJ_ERR_SECURITY otherwise
  */
-AJ_Status AJ_DSAVerify(const uint8_t *buf, uint16_t len,
-                       const ecc_signature *sig, const ecc_publickey *pubKey);
+AJ_Status AJ_DSAVerify(const uint8_t* buf, uint16_t len, const ecc_signature* sig, const ecc_publickey* pubKey);
 
 #endif

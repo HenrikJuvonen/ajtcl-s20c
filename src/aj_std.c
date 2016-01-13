@@ -30,18 +30,15 @@ const char AJ_ErrRejected[] = "org.alljoyn.Bus.Rejected";
 const char AJ_ErrResources[] = "org.alljoyn.Bus.Resources";
 const char AJ_ErrUpdateNotAllowed[] = "org.alljoyn.Error.UpdateNotAllowed";
 const char AJ_ErrInvalidValue[] = "org.alljoyn.Error.InvalidValue";
-const char AJ_ErrFeatureNotAvailable[] =
-    "org.alljoyn.Error.FeatureNotAvailable";
+const char AJ_ErrFeatureNotAvailable[] = "org.alljoyn.Error.FeatureNotAvailable";
 const char AJ_ErrMaxSizeExceeded[] = "org.alljoyn.Error.MaxSizeExceeded";
-const char AJ_ErrLanguageNotSuppored[] =
-    "org.alljoyn.Error.LanguageNotSupported";
+const char AJ_ErrLanguageNotSuppored[] = "org.alljoyn.Error.LanguageNotSupported";
 
 static const char DBusObjectPath[] = "/org/freedesktop/DBus";
 static const char DBusInterface[] = "org.freedesktop.DBus";
 const char DBusPeerInterface[] = "#org.freedesktop.DBus.Peer";
 static const char DBusPropsInterface[] = "#org.freedesktop.DBus.Properties";
-static const char DBusIntrospectableInterface[] =
-    "#org.freedesktop.DBus.Introspectable";
+static const char DBusIntrospectableInterface[] = "#org.freedesktop.DBus.Introspectable";
 
 static const char BusObjectPath[] = "/org/alljoyn/Bus";
 static const char BusInterface[] = "org.alljoyn.Bus";
@@ -61,33 +58,56 @@ static const char AboutIconInterface[] = "org.alljoyn.Icon";
 
 const char AllSeenIntrospectableInterface[] = "#org.allseen.Introspectable";
 
-const char *const AJ_PropertiesIface[] = {DBusPropsInterface, "?Get <s <s >v",
-                                          "?Set <s <s <v", "?GetAll <s >a{sv}",
-                                          NULL};
+const char* const AJ_PropertiesIface[] = {
+    DBusPropsInterface,
+    "?Get <s <s >v",
+    "?Set <s <s <v",
+    "?GetAll <s >a{sv}",
+    NULL
+};
 
-const char *const AJ_IntrospectionIface[] = {DBusIntrospectableInterface,
-                                             "?Introspect >s", NULL};
+const char* const AJ_IntrospectionIface[] = {
+    DBusIntrospectableInterface,
+    "?Introspect >s",
+    NULL
+};
 
-const char *const AJ_AllSeenIntrospectionIface[] = {
-    AllSeenIntrospectableInterface, "?GetDescriptionLanguages >as",
-    "?IntrospectWithDescription <s >s", NULL};
+const char* const AJ_AllSeenIntrospectionIface[] = {
+    AllSeenIntrospectableInterface,
+    "?GetDescriptionLanguages >as",
+    "?IntrospectWithDescription <s >s",
+    NULL
+};
 
-static const char *const DBusIface[] = {
-    DBusInterface, "?Hello >s", "!NameOwnerChanged >s >s >s",
-    "!NameAcquired >s", "!NameLost >s", "!PropertiesChanged >s >a{sv} >as",
-    "?RequestName <s <u >u", "?AddMatch <s", "?RemoveMatch <s",
-    "?ReleaseName <s >u", NULL
+static const char* const DBusIface[] = {
+    DBusInterface,
+    "?Hello >s",
+    "!NameOwnerChanged >s >s >s",
+    "!NameAcquired >s",
+    "!NameLost >s",
+    "!PropertiesChanged >s >a{sv} >as",
+    "?RequestName <s <u >u",
+    "?AddMatch <s",
+    "?RemoveMatch <s",
+    "?ReleaseName <s >u",
+    NULL
 
 };
 
-static const char *const DBusPeerIface[] = {DBusPeerInterface, "?Ping",
-                                            "?GetMachineId >s", NULL
+static const char* const DBusPeerIface[] = {
+    DBusPeerInterface,
+    "?Ping",
+    "?GetMachineId >s",
+    NULL
 
 };
 
-static const AJ_InterfaceDescription DBusIfaces[] = {DBusIface, NULL};
+static const AJ_InterfaceDescription DBusIfaces[] = {
+    DBusIface,
+    NULL
+};
 
-static const char *const BusIface[] = {
+static const char* const BusIface[] = {
     BusInterface,
     "!SessionLost >u",
     "!FoundAdvertisedName >s >q >s",
@@ -108,64 +128,101 @@ static const char *const BusIface[] = {
     "?RemoveSessionMember <us >u",
     "!SessionLostWithReason >u >u",
     "?Ping <s <u >u",
-    NULL};
+    NULL
+};
 
-static const char *const DaemonIface[] = {DaemonInterface, "!ProbeReq",
-                                          "!ProbeAck", NULL};
+static const char* const DaemonIface[] = {
+    DaemonInterface,
+    "!ProbeReq",
+    "!ProbeAck",
+    NULL
+};
 
-static const char *const PeerSessionIface[] = {
-    PeerSessionInterface, "?AcceptSession <q <u <s <a{sv} >b",
-    "!SessionJoined >q >u >s", NULL};
+static const char* const PeerSessionIface[] = {
+    PeerSessionInterface,
+    "?AcceptSession <q <u <s <a{sv} >b",
+    "!SessionJoined >q >u >s",
+    NULL
+};
 
-static const char *const PeerAuthIface[] = {PeerAuthInterface,
-                                            "?ExchangeGuids <s <u >s >u",
-                                            "?GenSessionKey <s <s <s >s >s",
-                                            "?ExchangeGroupKeys <ay >ay",
-                                            "?AuthChallenge <s >s",
-                                            "?ExchangeSuites <au >au",
-                                            "?KeyExchange <u <v >u >v",
-                                            "?KeyAuthentication <v >v",
-                                            "@Mechanisms >s",
-                                            "@Version >u",
-                                            NULL};
+static const char* const PeerAuthIface[] = {
+    PeerAuthInterface,
+    "?ExchangeGuids <s <u >s >u",
+    "?GenSessionKey <s <s <s >s >s",
+    "?ExchangeGroupKeys <ay >ay",
+    "?AuthChallenge <s >s",
+    "?ExchangeSuites <au >au",
+    "?KeyExchange <u <v >u >v",
+    "?KeyAuthentication <v >v",
+    "@Mechanisms >s",
+    "@Version >u",
+    NULL
+};
 
-static const char *const AboutIface[] = {AboutInterface,
-                                         "@Version>q",
-                                         "?GetAboutData <s >a{sv}",
-                                         "?GetObjectDescription >a(oas)",
-                                         "!&Announce >q >q >a(oas) >a{sv}",
-                                         NULL};
+static const char* const AboutIface[] = {
+    AboutInterface,
+    "@Version>q",
+    "?GetAboutData <s >a{sv}",
+    "?GetObjectDescription >a(oas)",
+    "!&Announce >q >q >a(oas) >a{sv}",
+    NULL
+};
 
-static const char *const AboutIconIface[] = {
-    AboutIconInterface, "@Version>q",      "@MimeType>s", "@Size>u",
-    "?GetUrl >s",       "?GetContent >ay", NULL};
+static const char* const AboutIconIface[] = {
+    AboutIconInterface,
+    "@Version>q",
+    "@MimeType>s",
+    "@Size>u",
+    "?GetUrl >s",
+    "?GetContent >ay",
+    NULL
+};
 
-static const AJ_InterfaceDescription PeerIfaces[] = {PeerSessionIface,
-                                                     PeerAuthIface, NULL};
+static const AJ_InterfaceDescription PeerIfaces[] = {
+    PeerSessionIface,
+    PeerAuthIface,
+    NULL
+};
 
-static const AJ_InterfaceDescription BusIfaces[] = {BusIface, NULL};
+static const AJ_InterfaceDescription BusIfaces[] = {
+    BusIface,
+    NULL
+};
 
 /*
- * These are interfaces that all objects implement so use the wildcard in the
- * object list
+ * These are interfaces that all objects implement so use the wildcard in the object list
  */
 static const AJ_InterfaceDescription CommonIfaces[] = {
-    AJ_IntrospectionIface, DBusPeerIface, AJ_AllSeenIntrospectionIface, NULL};
+    AJ_IntrospectionIface,
+    DBusPeerIface,
+    AJ_AllSeenIntrospectionIface,
+    NULL
+};
 
-static const AJ_InterfaceDescription DaemonIfaces[] = {DaemonIface, NULL};
+static const AJ_InterfaceDescription DaemonIfaces[] = {
+    DaemonIface,
+    NULL
+};
 
-static const AJ_InterfaceDescription AboutIfaces[] = {AJ_PropertiesIface,
-                                                      AboutIface, NULL};
+static const AJ_InterfaceDescription AboutIfaces[] = {
+    AJ_PropertiesIface,
+    AboutIface,
+    NULL
+};
 
-static const AJ_InterfaceDescription AboutIconIfaces[] = {AJ_PropertiesIface,
-                                                          AboutIconIface, NULL};
+static const AJ_InterfaceDescription AboutIconIfaces[] = {
+    AJ_PropertiesIface,
+    AboutIconIface,
+    NULL
+};
 
 const AJ_Object AJ_StandardObjects[] = {
-    {DBusObjectPath, DBusIfaces, 0, NULL},
-    {BusObjectPath, BusIfaces, 0, NULL},
-    {PeerObjectPath, PeerIfaces, 0, NULL},
-    {"?", CommonIfaces, 0, NULL},
-    {DaemonObjectPath, DaemonIfaces, 0, NULL},
-    {AboutObjectPath, AboutIfaces, AJ_OBJ_FLAG_ANNOUNCED, NULL},
-    {AboutIconObjectPath, AboutIconIfaces, AJ_OBJ_FLAG_ANNOUNCED, NULL},
-    {NULL, NULL, 0, NULL}};
+    { DBusObjectPath,      DBusIfaces,      0,                     NULL },
+    { BusObjectPath,       BusIfaces,       0,                     NULL },
+    { PeerObjectPath,      PeerIfaces,      0,                     NULL },
+    { "?",                 CommonIfaces,    0,                     NULL },
+    { DaemonObjectPath,    DaemonIfaces,    0,                     NULL },
+    { AboutObjectPath,     AboutIfaces,     AJ_OBJ_FLAG_ANNOUNCED, NULL },
+    { AboutIconObjectPath, AboutIconIfaces, AJ_OBJ_FLAG_ANNOUNCED, NULL },
+    { NULL,                NULL,            0,                     NULL }
+};

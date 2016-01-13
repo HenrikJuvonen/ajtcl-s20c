@@ -19,19 +19,19 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
-#include "aj_bufio.h"
 #include "aj_target.h"
+#include "aj_bufio.h"
 
 /**
  * Information about the remote service
  */
 typedef struct _AJ_Service {
-  uint8_t addrTypes;      /**< address type */
-  uint16_t transportMask; /**< restricts the transports the advertisement */
-  uint16_t ipv4port;      /**< port number of ipv4 */
-  uint16_t ipv6port;      /**< port number of ipv6 */
-  uint32_t ipv4;          /**< ipv4 address */
-  uint32_t ipv6[4];       /**< ipv6 address */
+    uint8_t addrTypes;         /**< address type */
+    uint16_t transportMask;    /**< restricts the transports the advertisement */
+    uint16_t ipv4port;         /**< port number of ipv4 */
+    uint16_t ipv6port;         /**< port number of ipv6 */
+    uint32_t ipv4;             /**< ipv4 address */
+    uint32_t ipv6[4];          /**< ipv6 address */
 } AJ_Service;
 
 /**
@@ -43,7 +43,6 @@ typedef struct _AJ_Service {
  *
  * @return        Return AJ_Status
  */
-AJ_Status AJ_Discover(const char *prefix, AJ_Service *service,
-                      uint32_t timeout);
+AJ_Status AJ_Discover(const char* prefix, AJ_Service* service, uint32_t timeout);
 
 #endif

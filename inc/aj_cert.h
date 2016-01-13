@@ -22,33 +22,32 @@
  *    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ******************************************************************************/
 
+#include "aj_guid.h"
 #include "aj_crypto_ecc.h"
 #include "aj_crypto_sha2.h"
-#include "aj_guid.h"
 
 #define MAX_NUM_CERTIFICATES 2
 
 /*
  * Certificate types are native.
- * Conversion to network byte-order (big-endian) is done via encoding and
- * decoding.
+ * Conversion to network byte-order (big-endian) is done via encoding and decoding.
  */
 typedef struct _AJ_Validity {
-  uint64_t validfrom;
-  uint64_t validto;
+    uint64_t validfrom;
+    uint64_t validto;
 } AJ_Validity;
 
-#define AJ_GUID_LENGTH (sizeof(AJ_GUID))
+#define AJ_GUID_LENGTH (sizeof (AJ_GUID))
 typedef struct _AJ_Certificate {
-  uint32_t version;
-  ecc_publickey issuer;
-  ecc_publickey subject;
-  AJ_Validity validity;
-  uint8_t delegate;
-  uint8_t guild[AJ_GUID_LENGTH];
-  uint8_t digest[SHA256_DIGEST_LENGTH];
-  ecc_signature signature;
-  uint32_t size;
+    uint32_t version;
+    ecc_publickey issuer;
+    ecc_publickey subject;
+    AJ_Validity validity;
+    uint8_t delegate;
+    uint8_t guild[AJ_GUID_LENGTH];
+    uint8_t digest[SHA256_DIGEST_LENGTH];
+    ecc_signature signature;
+    uint32_t size;
 } AJ_Certificate;
 
 /**
@@ -59,7 +58,7 @@ typedef struct _AJ_Certificate {
  * @param u8   Unsigned 8-bit array
  *
  */
-void HostU32ToBigEndianU8(uint32_t *u32, size_t len, uint8_t *u8);
+void HostU32ToBigEndianU8(uint32_t* u32, size_t len, uint8_t* u8);
 
 /**
  * Encode native public key to network order bytes.
@@ -70,7 +69,7 @@ void HostU32ToBigEndianU8(uint32_t *u32, size_t len, uint8_t *u8);
  * @return AJ_OK
  *
  */
-AJ_Status AJ_BigEndianEncodePublicKey(ecc_publickey *publickey, uint8_t *b8);
+AJ_Status AJ_BigEndianEncodePublicKey(ecc_publickey* publickey, uint8_t* b8);
 
 /**
  * Decode network order bytes to native public key.
@@ -81,7 +80,7 @@ AJ_Status AJ_BigEndianEncodePublicKey(ecc_publickey *publickey, uint8_t *b8);
  * @return AJ_OK
  *
  */
-AJ_Status AJ_BigEndianDecodePublicKey(ecc_publickey *publickey, uint8_t *b8);
+AJ_Status AJ_BigEndianDecodePublicKey(ecc_publickey* publickey, uint8_t* b8);
 
 /**
  * Encode native private key to network order bytes.
@@ -92,7 +91,7 @@ AJ_Status AJ_BigEndianDecodePublicKey(ecc_publickey *publickey, uint8_t *b8);
  * @return AJ_OK
  *
  */
-AJ_Status AJ_BigEndianEncodePrivateKey(ecc_privatekey *privatekey, uint8_t *b8);
+AJ_Status AJ_BigEndianEncodePrivateKey(ecc_privatekey* privatekey, uint8_t* b8);
 
 /**
  * Decode network order bytes to native private key.
@@ -103,7 +102,7 @@ AJ_Status AJ_BigEndianEncodePrivateKey(ecc_privatekey *privatekey, uint8_t *b8);
  * @return AJ_OK
  *
  */
-AJ_Status AJ_BigEndianDecodePrivateKey(ecc_privatekey *privatekey, uint8_t *b8);
+AJ_Status AJ_BigEndianDecodePrivateKey(ecc_privatekey* privatekey, uint8_t* b8);
 
 /**
  * Encode native certificate to network order bytes.
@@ -117,8 +116,7 @@ AJ_Status AJ_BigEndianDecodePrivateKey(ecc_privatekey *privatekey, uint8_t *b8);
  *         - AJ_ERR_RESOURCES if buffer not large enough
  *
  */
-AJ_Status AJ_BigEndianEncodeCertificate(AJ_Certificate *certificate,
-                                        uint8_t *b8, size_t b8len);
+AJ_Status AJ_BigEndianEncodeCertificate(AJ_Certificate* certificate, uint8_t* b8, size_t b8len);
 
 /**
  * Decode network order bytes to native certificate.
@@ -132,8 +130,7 @@ AJ_Status AJ_BigEndianEncodeCertificate(AJ_Certificate *certificate,
  *         - AJ_ERR_RESOURCES if buffer not large enough
  *
  */
-AJ_Status AJ_BigEndianDecodeCertificate(AJ_Certificate *certificate,
-                                        uint8_t *b8, size_t b8len);
+AJ_Status AJ_BigEndianDecodeCertificate(AJ_Certificate* certificate, uint8_t* b8, size_t b8len);
 
 /**
  * Create certificate
@@ -149,12 +146,9 @@ AJ_Status AJ_BigEndianDecodeCertificate(AJ_Certificate *certificate,
  * @return AJ_OK
  *
  */
-AJ_Status AJ_CreateCertificate(AJ_Certificate *certificate,
-                               const uint32_t version,
-                               const ecc_publickey *issuer,
-                               const ecc_publickey *subject,
-                               const AJ_GUID *guild, const uint8_t *digest,
-                               const uint8_t delegate);
+AJ_Status AJ_CreateCertificate(AJ_Certificate* certificate, const uint32_t version,
+                               const ecc_publickey* issuer, const ecc_publickey* subject,
+                               const AJ_GUID* guild, const uint8_t* digest, const uint8_t delegate);
 
 /**
  * Sign certificate
@@ -167,8 +161,7 @@ AJ_Status AJ_CreateCertificate(AJ_Certificate *certificate,
  *         - AJ_ERR_SECURITY on sign error
  *
  */
-AJ_Status AJ_SignCertificate(AJ_Certificate *certificate,
-                             const ecc_privatekey *issuer_private);
+AJ_Status AJ_SignCertificate(AJ_Certificate* certificate, const ecc_privatekey* issuer_private);
 
 /**
  * Verify certificate
@@ -180,6 +173,6 @@ AJ_Status AJ_SignCertificate(AJ_Certificate *certificate,
  *         - AJ_ERR_SECURITY on verify error
  *
  */
-AJ_Status AJ_VerifyCertificate(AJ_Certificate *certificate);
+AJ_Status AJ_VerifyCertificate(AJ_Certificate* certificate);
 
 #endif

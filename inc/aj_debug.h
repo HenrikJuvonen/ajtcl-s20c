@@ -84,14 +84,10 @@
  * @section aj_debug_env Enabling Debug Logging Using Environment Variables
  *
  * On targets that support it (for example Linux or Windows), debug logging may
- * also enabled using environment variables.  Instead of setting a memory
- * variable
- * named as @c dbgMODULE one can set a corresponding environment variable named
- * as
- * @c ER_DEBUG_MODULE.  If one wanted to enable debug logging in the CONNECT
- * module
- * as done in the @ref aj_debug_qs section, one would set the environment
- * variable
+ * also enabled using environment variables.  Instead of setting a memory variable
+ * named as @c dbgMODULE one can set a corresponding environment variable named as
+ * @c ER_DEBUG_MODULE.  If one wanted to enable debug logging in the CONNECT module
+ * as done in the @ref aj_debug_qs section, one would set the environment variable
  * for the CONNECT module:
  *
  * @code
@@ -127,17 +123,14 @@
  *    AJ_DebugLevel AJ_DbgLevel = AJ_DEBUG_INFO;
  * @endcode
  *
- * @note Again, one can set AJ_DbgLevel in the debugger to dynamically control
- * the
+ * @note Again, one can set AJ_DbgLevel in the debugger to dynamically control the
  * verbosity of logging at runtime.
  *
  * @section aj_debug_com Restricting Compilation of Debug Logging
  *
- * It is possible that some target environments are restricted to such a degree
- * that
+ * It is possible that some target environments are restricted to such a degree that
  * it is not possible to store all of the strings required for the various log
- * statements in memory.  To accommodate such environments a @c RESTRICT
- * mechanism
+ * statements in memory.  To accommodate such environments a @c RESTRICT mechanism
  * is provided.  This restriction mechanism is controlled by the definition of
  * @c AJ_DEBUG_RESTRICT in the inc/aj_debug.h header file.
  *
@@ -168,8 +161,8 @@
  * @{
  */
 
-#include "aj_msg.h"
 #include "aj_target.h"
+#include "aj_msg.h"
 
 /**
  * Always print a message in a fashion similar to other conditional log outputs.
@@ -177,10 +170,10 @@
  *
  * @param msg  A format string and arguments
  */
-#define AJ_AlwaysPrintf(msg)                                                   \
-  do {                                                                         \
-    AJ_Printf msg;                                                             \
-  } while (0)
+#define AJ_AlwaysPrintf(msg) \
+    do { \
+        AJ_Printf msg; \
+    } while (0)
 
 #ifndef NDEBUG
 
@@ -191,7 +184,7 @@
  * @param msg       message header
  * @param body      if true, dump raw data
  */
-void _AJ_DumpMsg(const char *tag, AJ_Message *msg, uint8_t body);
+void _AJ_DumpMsg(const char* tag, AJ_Message* msg, uint8_t body);
 
 /**
  * Dump raw (byte) data in a convenient format.
@@ -200,7 +193,7 @@ void _AJ_DumpMsg(const char *tag, AJ_Message *msg, uint8_t body);
  * @param data      start address to dump
  * @param len       length to dump
  */
-void _AJ_DumpBytes(const char *tag, const uint8_t *data, uint32_t len);
+void _AJ_DumpBytes(const char* tag, const uint8_t* data, uint32_t len);
 
 /*
  * Threshold level for debug output.  When used with AJ_DbgLevel the setting
@@ -208,17 +201,12 @@ void _AJ_DumpBytes(const char *tag, const uint8_t *data, uint32_t len);
  * used in the AJ_DEBUG_RESTRICT mechanism to control which log messages are
  * actually compiled into the code.
  */
-#define AJ_DEBUG_OFF 0 /**< Suppresses all debug output */
-#define AJ_DEBUG_ERROR                                                         \
-  1 /**< Indicates a log message conveying an error condition */
-#define AJ_DEBUG_WARN                                                          \
-  2 /**< Indicates a log message corresponding to a warning */
-#define AJ_DEBUG_INFO                                                          \
-  3 /**< Indicates a log message with general information  \ \                                                                             \
-       */
-#define AJ_DEBUG_DUMP                                                          \
-  4 /**< Indicates a message with a detailed, possibly byte-by-byte dump */
-#define AJ_DEBUG_ALL 5 /**< A placeholder level above other levels */
+#define AJ_DEBUG_OFF   0  /**< Suppresses all debug output */
+#define AJ_DEBUG_ERROR 1  /**< Indicates a log message conveying an error condition */
+#define AJ_DEBUG_WARN  2  /**< Indicates a log message corresponding to a warning */
+#define AJ_DEBUG_INFO  3  /**< Indicates a log message with general information */
+#define AJ_DEBUG_DUMP  4  /**< Indicates a message with a detailed, possibly byte-by-byte dump */
+#define AJ_DEBUG_ALL   5  /**< A placeholder level above other levels */
 
 /**
  * Type definition for a value used to control the debug level (verbosity)
@@ -227,8 +215,7 @@ void _AJ_DumpBytes(const char *tag, const uint8_t *data, uint32_t len);
 typedef uint32_t AJ_DebugLevel;
 
 /**
- * We allow the verbosity of debug output to be controlled programmatically
- * using
+ * We allow the verbosity of debug output to be controlled programmatically using
  * predefined AJ_DEBUG_* threshold levels.  The macro AJ_DEBUG_RESTRICT is used
  * in the sense of restricting (not compiling in) messages with verbosity levels
  * greater than the given level.
@@ -241,44 +228,39 @@ typedef uint32_t AJ_DebugLevel;
 #endif
 
 /**
- * Set this value to control the debug output threshold level. The default is
- * AJ_DEBUG_ERROR
+ * Set this value to control the debug output threshold level. The default is AJ_DEBUG_ERROR
  */
 AJ_EXPORT extern AJ_DebugLevel AJ_DbgLevel;
 AJ_EXPORT extern uint8_t dbgALL;
 
-extern int _AJ_DbgEnabled(const char *module);
+extern int _AJ_DbgEnabled(const char* module);
 
 /**
- * Internal debug printf function. Don't call this directly, use the
- * AJ_*Printf() macros.
+ * Internal debug printf function. Don't call this directly, use the AJ_*Printf() macros.
  *
  * @param level The level associated with this debug print
  * @param file  File name for file calling this function
  * @param line  Line number for line this function was called from
  */
 AJ_EXPORT
-int _AJ_DbgHeader(AJ_DebugLevel level, const char *file, int line);
+int _AJ_DbgHeader(AJ_DebugLevel level, const char* file, int line);
 
-#define QUOTE(x) #x
+#define QUOTE(x) # x
 #define STR(x) QUOTE(x)
 
-#define CONCAT(x, y) x##y
+#define CONCAT(x, y) x ## y
 #define MKVAR(x, y) CONCAT(x, y)
 
 #if AJ_DEBUG_RESTRICT >= AJ_DEBUG_ERROR
 /**
- * Print an error message.  Error messages may be suppressed by
- * AJ_DEBUG_RESTRICT
+ * Print an error message.  Error messages may be suppressed by AJ_DEBUG_RESTRICT
  *
  * @param msg  A format string and arguments
  */
-#define AJ_ErrPrintf(msg)                                                      \
-  do {                                                                         \
-    if (_AJ_DbgHeader(AJ_DEBUG_ERROR, __FILE__, __LINE__)) {                   \
-      AJ_Printf msg;                                                           \
-    }                                                                          \
-  } while (0)
+#define AJ_ErrPrintf(msg) \
+    do { \
+        if (_AJ_DbgHeader(AJ_DEBUG_ERROR, __FILE__, __LINE__)) { AJ_Printf msg; } \
+    } while (0)
 #else
 #define AJ_ErrPrintf(_msg)
 #endif
@@ -289,12 +271,10 @@ int _AJ_DbgHeader(AJ_DebugLevel level, const char *file, int line);
  *
  * @param msg  A format string and arguments
  */
-#define AJ_WarnPrintf(msg)                                                     \
-  do {                                                                         \
-    if (_AJ_DbgHeader(AJ_DEBUG_WARN, __FILE__, __LINE__)) {                    \
-      AJ_Printf msg;                                                           \
-    }                                                                          \
-  } while (0)
+#define AJ_WarnPrintf(msg) \
+    do { \
+        if (_AJ_DbgHeader(AJ_DEBUG_WARN, __FILE__, __LINE__)) { AJ_Printf msg; } \
+    } while (0)
 #else
 #define AJ_WarnPrintf(_msg)
 #endif
@@ -307,14 +287,12 @@ int _AJ_DbgHeader(AJ_DebugLevel level, const char *file, int line);
  *
  * @param msg  A format string and arguments
  */
-#define AJ_InfoPrintf(msg)                                                     \
-  do {                                                                         \
-    if (dbgALL || MKVAR(dbg, AJ_MODULE) || _AJ_DbgEnabled(STR(AJ_MODULE))) {   \
-      if (_AJ_DbgHeader(AJ_DEBUG_INFO, __FILE__, __LINE__)) {                  \
-        AJ_Printf msg;                                                         \
-      }                                                                        \
-    }                                                                          \
-  } while (0)
+#define AJ_InfoPrintf(msg) \
+    do { \
+        if (dbgALL || MKVAR(dbg, AJ_MODULE) || _AJ_DbgEnabled(STR(AJ_MODULE))) { \
+            if (_AJ_DbgHeader(AJ_DEBUG_INFO, __FILE__, __LINE__)) { AJ_Printf msg; } \
+        } \
+    } while (0)
 #else
 #define AJ_InfoPrintf(_msg)
 #endif
@@ -328,12 +306,10 @@ int _AJ_DbgHeader(AJ_DebugLevel level, const char *file, int line);
  * @param msg A format string
  * and arguments
  */
-#define AJ_DumpBytes(tag, data, len)                                           \
-  do {                                                                         \
-    if (MKVAR(dbg, AJ_MODULE) || _AJ_DbgEnabled(STR(AJ_MODULE))) {             \
-      _AJ_DumpBytes(tag, data, len);                                           \
-    }                                                                          \
-  } while (0)
+#define AJ_DumpBytes(tag, data, len) \
+    do { \
+        if (MKVAR(dbg, AJ_MODULE) || _AJ_DbgEnabled(STR(AJ_MODULE))) { _AJ_DumpBytes(tag, data, len); } \
+    } while (0)
 #else
 #define AJ_DumpBytes(tag, data, len)
 #endif
@@ -346,12 +322,10 @@ int _AJ_DbgHeader(AJ_DebugLevel level, const char *file, int line);
  *
  * @param msg  A format string and arguments
  */
-#define AJ_DumpMsg(tag, msg, body)                                             \
-  do {                                                                         \
-    if (MKVAR(dbg, AJ_MODULE) || _AJ_DbgEnabled(STR(AJ_MODULE))) {             \
-      _AJ_DumpMsg(tag, msg, body);                                             \
-    }                                                                          \
-  } while (0)
+#define AJ_DumpMsg(tag, msg, body) \
+    do { \
+        if (MKVAR(dbg, AJ_MODULE) || _AJ_DbgEnabled(STR(AJ_MODULE))) { _AJ_DumpMsg(tag, msg, body); } \
+    } while (0)
 #else
 #define AJ_DumpMsg(tag, msg, body)
 #endif
@@ -371,7 +345,7 @@ int _AJ_DbgHeader(AJ_DebugLevel level, const char *file, int line);
  *
  * @param status  A status code
  */
-AJ_EXPORT const char *AJ_StatusText(AJ_Status status);
+AJ_EXPORT const char* AJ_StatusText(AJ_Status status);
 
 /**
  * @}
